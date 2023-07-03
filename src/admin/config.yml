@@ -1,0 +1,249 @@
+backend:
+  # Use netlify identity as backend
+  name: git-gateway
+  branch: main
+  ### enable below lines for github integration ###
+  # name: github
+  # repo: surjithctly/neat-starter
+media_folder: 'src/assets'
+public_folder: '/assets'
+
+publish_mode: editorial_workflow
+
+show_preview_links: true
+display_url: 'http://localhost:8080'
+
+# Please run "npx netlify-cms-proxy-server" for local backend
+local_backend: true
+# publish_mode: editorial_workflow
+collections:
+  - label: 'Blog'
+    name: 'blog'
+    folder: 'src/posts'
+    create: true
+    editor:
+      preview: true
+    preview_path: '{{ slug }}'
+    show_preview_links: true
+    view_groups:
+      - label: Year
+        field: date
+        # groups items based on the value matched by the pattern
+        pattern: \d{4}
+      - label: Drafts
+        field: draft
+    fields:
+      - label: Draft
+        name: draft
+        widget: 'boolean'
+        default: true
+      - { label: 'Title', name: 'title', widget: 'string' }
+      - {
+          label: 'Description',
+          name: 'excerpt',
+          widget: 'string',
+          required: false,
+        }
+      - { label: 'Author', name: 'author', widget: 'string' }
+      - { label: 'Publish Date', name: 'date', widget: 'datetime' }
+      - { label: 'Body', name: 'body', widget: 'markdown' }
+      - widget: list
+        label: 'tags'
+        name: 'tags'
+        multiple: true
+        create: true
+        options: ['Tags', 'created', 'from', 'config.yml']
+  # - label: 'Settings'
+  #   name: 'settings'
+  #   editor:
+  #     preview: false
+  #   files:
+  #     - label: 'Navigation'
+  #       name: 'items'
+  #       file: 'src/_data/navigation.yaml'
+  #       fields:
+  #         - label: Nav Items
+  #           name: items
+  #           widget: list
+  #           allow_add: false
+  #           collapsed: false
+  #           fields:
+  #             - { label: Title, name: text, widget: string }
+  #             - { label: URL, name: url, widget: string }
+  #     - label: 'Quick Links'
+  #       name: 'links'
+  #       file: 'src/_data/quicklinks.yaml'
+  #       fields:
+  #         - label: Nav Items
+  #           name: links
+  #           widget: list
+  #           collapsed: false
+  #           fields:
+  #             - { label: Title, name: title, widget: string }
+  #             - { label: URL, name: url, widget: string }
+  #             - { label: Description, name: desc, widget: string }
+  #     - label: 'Meta Settings'
+  #       name: 'settings'
+  #       file: 'src/_data/settings.yaml'
+  #       fields:
+  #         - { label: Name, name: name, widget: string }
+  #         - { label: Author, name: author, widget: string }
+  #         - { label: URL, name: url, widget: string }
+  - label: 'Pages'
+    name: 'page'
+    folder: 'src'
+    preview_path: '{{ filename }}'
+    create: true
+    editor:
+      preview: true
+    fields:
+      - { label: 'Title', name: 'title', widget: 'string' }
+      - { label: 'Layout', name: 'layout', widget: 'hidden', default: 'page' }
+      - { label: 'Author', name: 'author', widget: 'string' }
+      - { label: 'Navigation', name: 'eleventyNavigation', widget: 'hidden' }
+      - label: 'SEO'
+        name: 'seo'
+        widget: 'object'
+        collapsed: true
+        required: false
+        fields:
+          - { label: 'title', name: 'title', widget: 'string', required: false }
+          - {
+              label: 'Description',
+              name: 'description',
+              widget: 'string',
+              required: false,
+            }
+          - { label: 'image', name: 'image', widget: 'string', required: false }
+      - label: 'Hero'
+        name: 'hero'
+        widget: 'select'
+        options: ['carousel', 'graphic', 'video', 'split']
+        default: 'graphic'
+      - label: Sections
+        name: blocks
+        widget: 'categories'
+        separator: '--'
+      - label: 'Hero Settings'
+        name: 'heroSettings'
+        collapsed: true
+        widget: 'object'
+        fields:
+          - label: 'Height'
+            name: 'Height'
+            widget: 'object'
+            required: false
+            collapsed: true
+            fields:
+              - label: 'Mobile'
+                name: 'Mobile'
+                default: 'h-1/1'
+                options:
+                  [
+                    'h-1/1',
+                    'h-1/2',
+                    'h-1/3',
+                    'h-3/4',
+                    'h-9/10',
+                    'h-48',
+                    'h-56',
+                    'h-64',
+                  ]
+                required: false
+              - label: 'Desktop'
+                name: 'desktop'
+                default: 'h-1/1'
+                options:
+                  [
+                    'h-1/1',
+                    'h-1/2',
+                    'h-1/3',
+                    'h-3/4',
+                    'h-9/10',
+                    'h-48',
+                    'h-56',
+                    'h-64',
+                  ]
+                required: false
+          - label: 'Background'
+            name: 'bg'
+            required: false
+            widget: 'object'
+            collapsed: true
+            fields:
+              - label: 'Color'
+                name: 'color'
+              - label: 'Image'
+                name: 'image'
+                widget: 'image'
+                media_library:
+                  media_folder: '/assets/images'
+              - label: 'Video'
+                name: 'video'
+                widget: 'file'
+                media_library:
+                  config:
+                    media_folder: '/assets/video'
+                required: false
+              - label: 'Mobile Opacity'
+                name: 'opacityMobile'
+                required: false
+              - label: 'Desktop Opacity'
+                name: 'opacityDesktop'
+                required: false
+          - label: 'Heading Text'
+            name: 'headingText'
+            widget: 'string'
+          - label: 'Heading Text Colot'
+            name: 'headingTextColor'
+            default: 'text-white'
+            widget: 'string'
+            required: false
+          - label: 'Heading Text Case'
+            name: 'headingTextCase'
+            widget: 'select'
+            required: false
+            options: ['uppercase', 'lowercase', 'capitalize']
+            default: 'capitalize'
+          - label: 'Subheading Text'
+            name: 'subheadingText'
+            widget: 'string'
+          - label: 'Subheading Text Color'
+            name: 'subheadingTextColor'
+            default: 'text-white'
+            widget: 'string'
+            required: false
+          - label: 'Button Text'
+            name: 'buttonText'
+            widget: 'string'
+          - label: 'Button URL'
+            name: 'buttonURL'
+            widget: 'string'
+          - label: 'Button Text Color'
+            name: 'buttonTextColor'
+            widget: 'string'
+            required: false
+          - label: 'Button Background Color'
+            name: 'buttonBgCplor'
+            widget: 'string'
+            required: false
+          - label: 'Button Background Hover Color'
+            name: 'buttonBgHover'
+            widget: 'string'
+            required: false
+          - label: 'Button Border'
+            name: 'buttonBorder'
+            widget: 'string'
+            required: false
+          - label: 'Carousel'
+            name: 'carousel'
+            widget: 'object'
+            collapsed: true
+            fields:
+              - label: 'Images'
+                name: 'images'
+                widget: 'list'
+
+      - label: 'Body'
+        name: 'body'
+        widget: 'markdown'
