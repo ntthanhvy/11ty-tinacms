@@ -1,7 +1,6 @@
-# Custom Local 
+# Custom Local
 project
 _project
-
 
 # Logs
 logs
@@ -107,3 +106,6 @@ dist
 
 # TernJS port file
 .tern-port
+
+node_modules
+_site
