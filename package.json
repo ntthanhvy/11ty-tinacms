@@ -28,7 +28,7 @@
     "debug": "set DEBUG=* & eleventy",
     "dev:css": "npx tailwindcss -i src/assets/css/tailwind.css -o _site/css/styles.css --watch",
     "build": "cross-env ELEVENTY_ENV=production eleventy --output dist && cross-env NODE_ENV=production tailwindcss -i src/assets/css/tailwind.css -o _site/css/style.css",
-    "browsersync": "browser-sync start --server _site --files _site --port 8080 --no-notify --no-open"
+    "browsersync": "browser-sync start --server dist --files dist --port $PORT --no-notify --no-open"
   },
   "devDependencies": {
     "@11ty/eleventy": "^1.0.2",
