@@ -4,6 +4,6 @@ COPY ./ /app/
 
 WORKDIR /app
 
-RUN npm install
+RUN if [ -f yarn.lock ]; then yarn install; else npm install; fi
 
 CMD ["npm", "run", "dev"]
